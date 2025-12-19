@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MovieStudioWebApplication.Models.Film>
+﻿@model IEnumerable<MovieStudioWebApplication.Models.FilmIndexViewModel>
 
 @{
     ViewBag.Title = "Фильмы";
@@ -24,10 +24,10 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Director.FirstName) режиссера
+            @Html.DisplayNameFor(model => model.DirectorFullName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Studio.Name) студии
+            @Html.DisplayNameFor(model => model.StudioName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Title)
@@ -53,10 +53,10 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Director.FirstName) @Html.DisplayFor(modelItem => item.Director.LastName)
+            @Html.DisplayFor(modelItem => item.DirectorFullName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Studio.Name)
+            @Html.DisplayFor(modelItem => item.StudioName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Title)

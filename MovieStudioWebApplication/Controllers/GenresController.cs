@@ -17,7 +17,14 @@ namespace MovieStudioWebApplication.Controllers
         // GET: Genres
         public ActionResult Index()
         {
-            return View(db.Genres.ToList());
+            var genres = db.Genres.Select(g => new GenreIndexViewModel
+            {
+                GenreID = g.GenreID,
+                Name = g.Name,
+                Description = g.Description,
+                FilmCount = MovieDbContext.GetFilmCountForGenre(g.GenreID)
+            });
+            return View(genres.ToList());
         }
 
         // GET: Genres/Details/5
