@@ -1,0 +1,87 @@
+﻿@model IEnumerable<MovieStudioWebApplication.Models.Film>
+
+@{
+    ViewBag.Title = "Фильмы";
+}
+
+<h2>Фильмы</h2>
+
+<p>
+    @Html.ActionLink("Создать новую запись", "Create")
+</p>
+
+@using (Html.BeginForm("Index", "Films", FormMethod.Get))
+{
+    <p>
+        Название: @Html.TextBox("searchString", null, new { @class = "form-control" })
+        Жанр: @Html.DropDownList("genreId", (SelectList)ViewBag.GenreId, "Все", new { @class = "form-control" })
+        Год выпуска: @Html.DropDownList("releaseYear", (SelectList)ViewBag.ReleaseYear, "Все", new { @class = "form-control" })
+        <input type="submit" value="Поиск" class="btn btn-primary" />
+    </p>
+}
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Director.FirstName) режиссера
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Studio.Name) студии
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReleaseYear)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DurationMinutes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Budget)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BoxOffice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Rating)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Director.FirstName) @Html.DisplayFor(modelItem => item.Director.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Studio.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReleaseYear)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DurationMinutes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Budget)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BoxOffice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Rating)
+        </td>
+        <td>
+            @Html.ActionLink("Редактировать", "Edit", new { id=item.FilmID }) |
+            @Html.ActionLink("Подробнее", "Details", new { id=item.FilmID }) |
+            @Html.ActionLink("Удалить", "Delete", new { id=item.FilmID })
+        </td>
+    </tr>
+}
+
+</table>

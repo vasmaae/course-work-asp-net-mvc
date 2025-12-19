@@ -1,0 +1,83 @@
+﻿@{
+    ViewBag.Title = "Главная страница";
+}
+
+<main>
+    <section class="row" aria-labelledby="mainTitle">
+        <h1 id="mainTitle">Добро пожаловать в MovieStudio!</h1>
+        <p class="lead">Ваш центр управления кинопроизводством.</p>
+        <p>Здесь вы можете управлять всеми аспектами вашей киностудии: от фильмов и актеров до студий и наград.</p>
+    </section>
+
+    <div class="row">
+        <section class="col-md-4">
+            <h2>Фильмы</h2>
+            <p>
+                Управляйте информацией о фильмах, включая режиссеров, студии, жанры и актерский состав.
+            </p>
+            <p><a class="btn btn-primary" href="@Url.Action("Index", "Films")">Подробнее &raquo;</a></p>
+        </section>
+        <section class="col-md-4">
+            <h2>Актеры</h2>
+            <p>
+                Добавляйте, редактируйте и просматривайте информацию об актерах, включая их биографии и опыт.
+            </p>
+            <p><a class="btn btn-primary" href="@Url.Action("Index", "Actors")">Подробнее &raquo;</a></p>
+        </section>
+        <section class="col-md-4">
+            <h2>Режиссеры</h2>
+            <p>
+                Ведение базы данных режиссеров со всеми необходимыми деталями.
+            </p>
+            <p><a class="btn btn-primary" href="@Url.Action("Index", "Directors")">Подробнее &raquo;</a></p>
+        </section>
+    </div>
+
+    <div class="row">
+        <section class="col-md-4">
+            <h2>Студии</h2>
+            <p>
+                Управление информацией о киностудиях, их расположении и бюджетах.
+            </p>
+            <p><a class="btn btn-primary" href="@Url.Action("Index", "Studios")">Подробнее &raquo;</a></p>
+        </section>
+        <section class="col-md-4">
+            <h2>Отделы</h2>
+            <p>
+                Детальная информация о каждом отделе вашей киностудии.
+            </p>
+            <p><a class="btn btn-primary" href="@Url.Action("Index", "Departments")">Подробнее &raquo;</a></p>
+        </section>
+        <section class="col-md-4">
+            <h2>Сотрудники</h2>
+            <p>
+                Учет сотрудников, их должностей и контактной информации.
+            </p>
+            <p><a class="btn btn-primary" href="@Url.Action("Index", "Employees")">Подробнее &raquo;</a></p>
+        </section>
+    </div>
+
+    <div class="row">
+        <section class="col-md-4">
+            <h2>Жанры</h2>
+            <p>
+                Список всех доступных жанров фильмов.
+            </p>
+            <p><a class="btn btn-primary" href="@Url.Action("Index", "Genres")">Подробнее &raquo;</a></p>
+        </section>
+        <section class="col-md-4">
+            <h2>Страны</h2>
+            <p>
+                Справочник стран для актеров и режиссеров.
+            </p>
+            <p><a class="btn btn-primary" href="@Url.Action("Index", "Countries")">Подробнее &raquo;</a></p>
+        </section>
+        <section class="col-md-4">
+            <h2>Награды</h2>
+            <p>
+                База данных всех кинонаград и их лауреатов.
+            </p>
+            <p><a class="btn btn-primary" href="@Url.Action("Index", "Awards")">Подробнее &raquo;</a></p>
+        </section>
+    </div>
+</main>

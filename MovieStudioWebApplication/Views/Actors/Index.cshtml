@@ -1,0 +1,80 @@
+﻿@model IEnumerable<MovieStudioWebApplication.Models.Actor>
+
+@{
+    ViewBag.Title = "Актеры";
+}
+
+<h2>Актеры</h2>
+
+<p>
+    @Html.ActionLink("Создать новую запись", "Create")
+</p>
+
+@using (Html.BeginForm("Index", "Actors", FormMethod.Get))
+{
+    <p>
+        Национальность: @Html.DropDownList("nationality", (SelectList)ViewBag.Nationality, "Все", new { @class = "form-control" })
+        Пол: @Html.DropDownList("gender", (SelectList)ViewBag.Gender, "Все", new { @class = "form-control" })
+        <input type="submit" value="Фильтр" class="btn btn-primary" />
+    </p>
+}
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Country.Name) страны
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BirthDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nationality)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ExperienceYears)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Country.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BirthDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Gender)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nationality)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ExperienceYears)
+        </td>
+        <td>
+            @Html.ActionLink("Редактировать", "Edit", new { id=item.ActorID }) |
+            @Html.ActionLink("Подробнее", "Details", new { id=item.ActorID }) |
+            @Html.ActionLink("Удалить", "Delete", new { id=item.ActorID })
+        </td>
+    </tr>
+}
+
+</table>

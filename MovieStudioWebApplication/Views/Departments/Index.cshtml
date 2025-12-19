@@ -1,0 +1,63 @@
+@model IEnumerable<MovieStudioWebApplication.Models.Department>
+
+@{
+    ViewBag.Title = "Отделы";
+}
+
+<h2>Отделы</h2>
+
+<p>
+    @Html.ActionLink("Создать новую запись", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Studio.Name) студии
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HeadName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmployeeCount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Budget)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Responsibilities)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Studio.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HeadName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmployeeCount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Budget)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Responsibilities)
+        </td>
+        <td>
+            @Html.ActionLink("Редактировать", "Edit", new { id=item.DepartmentID }) |
+            @Html.ActionLink("Подробнее", "Details", new { id=item.DepartmentID }) |
+            @Html.ActionLink("Удалить", "Delete", new { id=item.DepartmentID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,66 @@
+@model MovieStudioWebApplication.Models.Studio
+
+@{
+    ViewBag.Title = "Подробности";
+}
+
+<h2>Подробности</h2>
+
+<div>
+    <h4>Студия</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Location)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Location)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FoundedYear)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FoundedYear)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeCount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeCount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Budget)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Budget)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Редактировать", "Edit", new { id = Model.StudioID }) |
+    @Html.ActionLink("Вернуться к списку", "Index")
+</p>

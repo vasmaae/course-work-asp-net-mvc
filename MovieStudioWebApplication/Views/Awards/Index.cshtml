@@ -1,0 +1,63 @@
+@model IEnumerable<MovieStudioWebApplication.Models.Award>
+
+@{
+    ViewBag.Title = "Награды";
+}
+
+<h2>Награды</h2>
+
+<p>
+    @Html.ActionLink("Создать новую запись", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Year)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WinnerName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CeremonyLocation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Year)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WinnerName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CeremonyLocation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.ActionLink("Редактировать", "Edit", new { id=item.AwardID }) |
+            @Html.ActionLink("Подробнее", "Details", new { id=item.AwardID }) |
+            @Html.ActionLink("Удалить", "Delete", new { id=item.AwardID })
+        </td>
+    </tr>
+}
+
+</table>
