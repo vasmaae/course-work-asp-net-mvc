@@ -17,44 +17,30 @@ namespace MovieStudioWebApplication.Controllers
         // GET: Films
         public ActionResult Index(string searchString, int? genreId, int? releaseYear)
         {
-            var filmsQuery = db.Films.AsQueryable();
+            var films = db.Films.Include(f => f.Director).Include(f => f.Studio);
 
             // Searching
             if (!String.IsNullOrEmpty(searchString))
             {
-                filmsQuery = filmsQuery.Where(f => f.Title.Contains(searchString));
+                films = films.Where(f => f.Title.Contains(searchString));
             }
 
             // Filtering by Genre
             if (genreId.HasValue)
             {
-                filmsQuery = filmsQuery.Where(f => f.FilmGenres.Any(fg => fg.GenreID == genreId.Value));
+                films = films.Where(f => f.FilmGenres.Any(fg => fg.GenreID == genreId.Value));
             }
 
             // Filtering by Release Year
             if (releaseYear.HasValue)
             {
-                filmsQuery = filmsQuery.Where(f => f.ReleaseYear == releaseYear.Value);
+                films = films.Where(f => f.ReleaseYear == releaseYear.Value);
             }
 
-            var filmsViewModel = filmsQuery.Select(f => new FilmIndexViewModel
-            {
-                FilmID = f.FilmID,
-                Title = f.Title,
-                DirectorFullName = MovieDbContext.GetDirectorFullName(f.DirectorID),
-                StudioName = f.Studio.Name,
-                ReleaseYear = f.ReleaseYear,
-                DurationMinutes = f.DurationMinutes,
-                Budget = f.Budget,
-                BoxOffice = f.BoxOffice,
-                Rating = f.Rating
-            }).ToList();
+            ViewBag.GenreId = new SelectList(db.Genres, "GenreID", "Name", "Жанр");
+            ViewBag.ReleaseYear = new SelectList(db.Films.Select(f => f.ReleaseYear).Distinct(), "Год выпуска");
 
-
-            ViewBag.GenreId = new SelectList(db.Genres, "GenreID", "Name", genreId);
-            ViewBag.ReleaseYear = new SelectList(db.Films.Select(f => f.ReleaseYear).Distinct(), releaseYear);
-
-            return View(filmsViewModel);
+            return View(films.ToList());
         }
 
         // GET: Films/Details/5
@@ -69,9 +55,6 @@ namespace MovieStudioWebApplication.Controllers
             {
                 return HttpNotFound();
             }
-
-            ViewBag.Actors = db.GetActorsByFilm(id.Value).ToList();
-
             return View(film);
         }
 
