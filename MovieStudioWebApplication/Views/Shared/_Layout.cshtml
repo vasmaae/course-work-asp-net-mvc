@@ -47,5 +47,19 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <script>
+    $(document).ready(function () {
+        $.validator.methods.number = function (value, element) {
+            return this.optional(element) ||
+                /^-?\d+(?:[.,]\d+)?$/.test(value);
+        }
+
+        $.validator.methods.range = function (value, element, param) {
+            var globalizedValue = value.replace(",", ".");
+            return this.optional(element) ||
+                (globalizedValue >= param[0] && globalizedValue <= param[1]);
+        }
+    });
+    </script>
 </body>
 </html>
