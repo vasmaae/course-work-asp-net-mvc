@@ -1,12 +1,11 @@
+using Microsoft.Owin.Security;
+using MovieStudioWebApplication.Models;
+using System;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
-using MovieStudioWebApplication.Models;
-using System.Security.Cryptography;
-using Microsoft.Owin.Security;
-using System.Text;
-using System;
 
 namespace MovieStudioWebApplication.Controllers
 {
@@ -88,7 +87,7 @@ namespace MovieStudioWebApplication.Controllers
 
                 db.Users.Add(user);
                 db.SaveChanges();
-                
+
                 var identity = new ClaimsIdentity(new[] {
                         new Claim(ClaimTypes.Name, user.Username),
                     },
@@ -102,7 +101,7 @@ namespace MovieStudioWebApplication.Controllers
 
                 return RedirectToAction("Index", "Home");
             }
-            
+
             return View(model);
         }
 
@@ -140,7 +139,7 @@ namespace MovieStudioWebApplication.Controllers
             Array.Copy(hashBytes, 0, salt, 0, 16);
             var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000);
             byte[] hash = pbkdf2.GetBytes(20);
-            
+
             for (int i = 0; i < 20; i++)
             {
                 if (hashBytes[i + 16] != hash[i])

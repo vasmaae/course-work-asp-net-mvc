@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace MovieStudioWebApplication.Models
 {
@@ -29,7 +27,7 @@ namespace MovieStudioWebApplication.Models
         public string Biography { get; set; }
 
         [ForeignKey("Country")]
-        [Display(Name = "Страна")] 
+        [Display(Name = "Страна")]
         public int? CountryID { get; set; }
         public virtual Country Country { get; set; }
         public virtual ICollection<FilmActor> FilmActors { get; set; }

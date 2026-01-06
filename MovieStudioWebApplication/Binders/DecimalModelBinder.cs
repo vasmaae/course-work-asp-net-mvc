@@ -1,4 +1,3 @@
-using System;
 using System.Globalization;
 using System.Web.Mvc;
 
@@ -24,7 +23,7 @@ namespace MovieStudioWebApplication.Binders
 
             // Replace comma with a period for invariant culture parsing
             value = value.Replace(",", ".");
-            
+
             decimal myValue;
             if (decimal.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out myValue))
             {
