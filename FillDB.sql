@@ -16,7 +16,6 @@ INSERT INTO Genre (Name, Description) VALUES
 (N'Мелодрама', N'Фильмы о любви и романтических отношениях, часто с элементами драмы.');
 
 -- Таблица: Studios
--- Добавлены EmployeeCount и скорректированы бюджеты/описания
 INSERT INTO Studio (Name, Location, FoundedYear, EmployeeCount, Budget, Description) VALUES 
 (N'Мосфильм', N'Москва, Россия', 1924, 1500, 1000000000.00, N'Крупнейшая и старейшая киностудия России.'),
 (N'Ленфильм', N'Санкт-Петербург, Россия', 1914, 800, 500000000.00, N'Одна из ведущих киностудий России.'),
@@ -27,7 +26,6 @@ INSERT INTO Studio (Name, Location, FoundedYear, EmployeeCount, Budget, Descript
 (N'Bollywood Studios', N'Мумбаи, Индия', 1913, 3000, 900000000.00, N'Крупнейший центр производства фильмов в Индии.');
 
 -- Таблица: Departments
--- Скорректированы HeadName и Responsibilities, добавлены EmployeeCount
 INSERT INTO Department (StudioID, Name, HeadName, EmployeeCount, Budget, Responsibilities) VALUES 
 (1, N'Производственный отдел', N'Иванов А.С.', 150, 100000000.00, N'Планирование и реализация кинопроектов.'),
 (1, N'Отдел постпродакшна', N'Петрова Е.Д.', 80, 50000000.00, N'Монтаж, звукорежиссура, спецэффекты.'),
@@ -38,7 +36,6 @@ INSERT INTO Department (StudioID, Name, HeadName, EmployeeCount, Budget, Respons
 (6, N'Финансовый отдел', N'Браун Т.', 25, 120000000.00, N'Управление финансами студии.');
 
 -- Таблица: Directors
--- Заполнены все поля, включая CountryID, Nationality и Biography
 INSERT INTO Director (FirstName, LastName, BirthDate, Nationality, Biography, ExperienceYears, CountryID) VALUES 
 (N'Сергей', N'Бондарчук', 1920-09-25, N'Русский', N'Выдающийся советский кинорежиссер, актер, сценарист.', 50, 1),
 (N'Андрей', N'Тарковский', 1932-04-04, N'Русский', N'Культовый советский кинорежиссер и сценарист, мастер авторского кино.', 30, 1),
@@ -49,7 +46,6 @@ INSERT INTO Director (FirstName, LastName, BirthDate, Nationality, Biography, Ex
 (N'Акира', N'Куросава', 1910-03-23, N'Японец', N'Один из величайших кинорежиссеров в истории мирового кино.', 50, 7);
 
 -- Таблица: Employees
--- Заполнены все поля, включая DirectorAssistantID, ContactPhone, Email
 INSERT INTO Employee (DepartmentID, DirectorAssistantID, FirstName, LastName, Position, Salary, ContactPhone, Email, HireDate) VALUES 
 (1, NULL, N'Мария', N'Козлова', N'Помощник продюсера', 60000.00, N'+7-903-123-4567', N'm.kozlova@mosfilm.ru', 2018-05-15),
 (2, 2, N'Алексей', N'Смирнов', N'Звукорежиссер', 75000.00, N'+7-916-234-5678', N'a.smirnov@mosfilm.ru', 2019-01-20),
@@ -60,7 +56,6 @@ INSERT INTO Employee (DepartmentID, DirectorAssistantID, FirstName, LastName, Po
 (7, 7, N'Эмма', N'Уотсон', N'Финансовый аналитик', 95000.00, N'+44-20-7123-4567', N'e.watson@pinewood.uk', 2015-07-07);
 
 -- Таблица: Actors
--- Заполнены все поля, включая CountryID, Biography
 INSERT INTO Actor (FirstName, LastName, BirthDate, Gender, Nationality, Biography, ExperienceYears, CountryID) VALUES 
 (N'Леонардо', N'Ди Каприо', 1974-11-11, N'Мужской', N'Американец', N'Всемирно известный актер, лауреат Оскара.', 35, 2),
 (N'Мерил', N'Стрип', 1949-06-22, N'Женский', N'Американка', N'Одна из величайших актрис современности, многократная обладательница Оскара.', 45, 2),
@@ -71,7 +66,6 @@ INSERT INTO Actor (FirstName, LastName, BirthDate, Gender, Nationality, Biograph
 (N'Натали', N'Портман', 1981-06-09, N'Женский', N'Американка', N'Успешная актриса, лауреат Оскара.', 30, 2);
 
 -- Таблица: Films
--- Заполнены все поля, включая BoxOffice, Rating, Synopsis
 INSERT INTO Film (StudioID, DirectorID, Title, ReleaseYear, DurationMinutes, Budget, BoxOffice, Rating, Synopsis) VALUES 
 (1, 1, N'Война и мир', 1966, 427, 100000000.00, 500000000.00, 8.1, N'Эпическая киноэпопея по одноименному роману Льва Толстого.'),
 (1, 2, N'Солярис', 1972, 167, 10000000.00, 15000000.00, 7.8, N'Научно-фантастическая драма Андрея Тарковского.'),
@@ -82,7 +76,6 @@ INSERT INTO Film (StudioID, DirectorID, Title, ReleaseYear, DurationMinutes, Bud
 (2, 1, N'Судьба человека', 1959, 103, 1500000.00, 5000000.00, 8.5, N'Военная драма Сергея Бондарчука по рассказу Михаила Шолохова.');
 
 -- Таблица: Awards
--- Скорректированы описания и WinnerName, добавлено больше разнообразия
 INSERT INTO Award (Name, Year, Category, WinnerName, CeremonyLocation, Description) VALUES 
 (N'Оскар', 1967, N'Лучший иностранный фильм', N'Война и мир (реж. С. Бондарчук)', N'Лос-Анджелес, США', N'Главная кинопремия мира.'),
 (N'Золотая пальмовая ветвь', 1972, N'Лучший фильм', N'Солярис (реж. А. Тарковский)', N'Канны, Франция', N'Высшая награда Каннского кинофестиваля.'),
@@ -93,7 +86,6 @@ INSERT INTO Award (Name, Year, Category, WinnerName, CeremonyLocation, Descripti
 (N'Приз за лучшую мужскую роль', 1960, N'Лучшая мужская роль', N'Сергей Бондарчук (за фильм Судьба человека)', N'Москва, Россия', N'Признание актерского мастерства.');
 
 -- Многие-ко-многим: FilmGenres (Связи между фильмами и жанрами)
--- Соответствует новым FilmID и GenreID, добавлены более разнообразные связи
 INSERT INTO FilmGenre (FilmID, GenreID) VALUES 
 (1,1), (1,7), -- Война и мир: Драма, Мелодрама
 (2,4), (2,1), -- Солярис: Фантастика, Драма
@@ -104,7 +96,6 @@ INSERT INTO FilmGenre (FilmID, GenreID) VALUES
 (7,1), (7,7); -- Судьба человека: Драма, Мелодрама
 
 -- Многие-ко-многим: FilmActors (Связи между фильмами и актерами)
--- Соответствует новым FilmID и ActorID, добавлены реалистичные роли
 INSERT INTO FilmActor (FilmID, ActorID, Role) VALUES 
 (1,3, N'Андрей Болконский'), (1,4, N'Наташа Ростова'), -- Война и мир
 (2,3, N'Крис Кельвин'), -- Солярис
@@ -115,7 +106,6 @@ INSERT INTO FilmActor (FilmID, ActorID, Role) VALUES
 (7,3, N'Андрей Соколов'), (7,4, N'Ирина Соколова'); -- Судьба человека
 
 -- Многие-ко-многим: AwardRecipients (Связи между наградами, фильмами, актерами и режиссерами)
--- Соответствует новым ID и логике награждения
 INSERT INTO AwardRecipient (AwardID, FilmID, ActorID, DirectorID) VALUES 
 (1,1,NULL,1),   -- Оскар Война и мир (реж. Бондарчук)
 (2,2,NULL,2),   -- Золотая пальмовая ветвь Солярис (реж. Тарковский)
