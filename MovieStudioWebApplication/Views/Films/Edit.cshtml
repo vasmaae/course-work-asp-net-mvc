@@ -20,7 +20,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Film.StudioID, "Студия", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("StudioID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.Film.StudioID, (SelectList)ViewBag.StudioID, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Film.StudioID, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -28,7 +28,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Film.DirectorID, "Режиссер", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("DirectorID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.Film.DirectorID, (SelectList)ViewBag.DirectorID, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Film.DirectorID, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -51,7 +51,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Film.DurationMinutes, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class.col-md-10">
+            <div class="col-md-10">
                 @Html.EditorFor(model => model.Film.DurationMinutes, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Film.DurationMinutes, "", new { @class = "text-danger" })
             </div>
@@ -108,7 +108,7 @@
                                     <input type="checkbox"
                                            name="selectedGenres"
                                            value="@genre.GenreID"
-                                           @(Html.Raw(genre.Assigned ? "checked=\"checked\"" : ""))) />
+                                           @(Html.Raw(genre.Assigned ? "checked=\"checked\"" : "")) />
                                     @genre.Name
                                 @:</td>
                             }
@@ -135,7 +135,7 @@
                                     <input type="checkbox"
                                            name="selectedActors"
                                            value="@actor.ActorID"
-                                           @(Html.Raw(actor.Assigned ? "checked=\"checked\"" : ""))) />
+                                           @(Html.Raw(actor.Assigned ? "checked=\"checked\"" : "")) />
                                     @actor.Name
                                 @:</td>
                             }
