@@ -1,0 +1,83 @@
+@model MovieStudioWebApplication.Models.ReportsViewModel
+
+@{
+    ViewBag.Title = "Отчеты";
+}
+
+<h2>Отчеты</h2>
+
+@using (Html.BeginForm("Index", "Reports", FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-md-4">
+            <label for="minRating" class="form-label">Минимальный рейтинг</label>
+            <input id="minRating" name="minRating" type="number" step="0.1" value="@Model.MinRating" class="form-control" />
+        </div>
+        <div class="col-md-4 align-self-end">
+            <input type="submit" value="Показать" class="btn btn-outline-dark" />
+        </div>
+    </div>
+}
+
+<hr />
+
+<h4>Топ по рейтингу</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Фильм</th>
+            <th>Год</th>
+            <th>Рейтинг</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.TopRatedFilms)
+    {
+        <tr>
+            <td>@item.Title</td>
+            <td>@item.ReleaseYear</td>
+            <td>@item.Rating</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<h4>Фильмы по жанрам</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Жанр</th>
+            <th>Количество фильмов</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.GenreCounts)
+    {
+        <tr>
+            <td>@item.GenreName</td>
+            <td>@item.FilmCount</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<h4>Фильмы и режиссеры</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Фильм</th>
+            <th>Режиссер</th>
+            <th>Рейтинг</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.FilmsWithDirectors)
+    {
+        <tr>
+            <td>@item.Title</td>
+            <td>@item.DirectorName</td>
+            <td>@item.Rating</td>
+        </tr>
+    }
+    </tbody>
+</table>
