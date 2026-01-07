@@ -13,6 +13,8 @@ namespace MovieStudioWebApplication
             {
                 AuthenticationType = "ApplicationCookie",
                 LoginPath = new PathString("/Account/Login"),
+                SlidingExpiration = true,
+                ExpireTimeSpan = System.TimeSpan.FromDays(3650)
             });
         }
     }

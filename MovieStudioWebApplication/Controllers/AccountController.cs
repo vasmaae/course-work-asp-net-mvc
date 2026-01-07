@@ -44,6 +44,7 @@ namespace MovieStudioWebApplication.Controllers
             }
 
             var identity = new ClaimsIdentity(new[] {
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                     new Claim(ClaimTypes.Name, user.Username),
                 },
                 "ApplicationCookie");
@@ -51,7 +52,7 @@ namespace MovieStudioWebApplication.Controllers
             var ctx = Request.GetOwinContext();
             var authManager = ctx.Authentication;
 
-            authManager.SignIn(new AuthenticationProperties { IsPersistent = false }, identity);
+            authManager.SignIn(new AuthenticationProperties { IsPersistent = true }, identity);
 
             return RedirectToLocal(returnUrl);
         }
@@ -89,6 +90,7 @@ namespace MovieStudioWebApplication.Controllers
                 db.SaveChanges();
 
                 var identity = new ClaimsIdentity(new[] {
+                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                         new Claim(ClaimTypes.Name, user.Username),
                     },
                     "ApplicationCookie");
@@ -96,7 +98,7 @@ namespace MovieStudioWebApplication.Controllers
                 var ctx = Request.GetOwinContext();
                 var authManager = ctx.Authentication;
 
-                authManager.SignIn(new AuthenticationProperties { IsPersistent = false }, identity);
+                authManager.SignIn(new AuthenticationProperties { IsPersistent = true }, identity);
 
 
                 return RedirectToAction("Index", "Home");
