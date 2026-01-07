@@ -135,6 +135,11 @@
                                            value="@actor.ActorID"
                                            @(Html.Raw(actor.Assigned ? "checked=\"checked\"" : "")) />
                                     @actor.Name
+                                    <input type="text"
+                                           name="actorRoles[@actor.ActorID]"
+                                           value="@actor.Role"
+                                           class="form-control form-control-sm"
+                                           placeholder="Роль" />
                                 @:</td>
                             }
                             @:</tr>

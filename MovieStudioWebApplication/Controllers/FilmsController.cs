@@ -1,6 +1,7 @@
 using MovieStudioWebApplication.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -67,6 +68,7 @@ namespace MovieStudioWebApplication.Controllers
             var filmGenres = new HashSet<int>(viewModel.Film.Genres.Select(g => g.GenreID));
             var allActors = db.Actors;
             var filmActors = new HashSet<int>(viewModel.Film.FilmActors.Select(a => a.ActorID));
+            var filmActorRoles = viewModel.Film.FilmActors.ToDictionary(a => a.ActorID, a => a.Role);
 
             viewModel.Genres = new List<AssignedGenreData>();
             viewModel.Actors = new List<AssignedActorData>();
@@ -87,7 +89,8 @@ namespace MovieStudioWebApplication.Controllers
                 {
                     ActorID = actor.ActorID,
                     Name = actor.FirstName + " " + actor.LastName,
-                    Assigned = filmActors.Contains(actor.ActorID)
+                    Assigned = filmActors.Contains(actor.ActorID),
+                    Role = filmActorRoles.ContainsKey(actor.ActorID) ? filmActorRoles[actor.ActorID] : null
                 });
             }
         }
@@ -114,7 +117,7 @@ namespace MovieStudioWebApplication.Controllers
             {
                 var film = viewModel.Film;
                 UpdateFilmGenres(selectedGenres, film);
-                UpdateFilmActors(selectedActors, film);
+                UpdateFilmActors(selectedActors, Request.Form, film);
                 db.Films.Add(film);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -171,7 +174,7 @@ namespace MovieStudioWebApplication.Controllers
                 if (TryUpdateModel(film, "Film", new string[] { "Title", "ReleaseYear", "DurationMinutes", "Budget", "BoxOffice", "Rating", "Synopsis", "StudioID", "DirectorID" }))
                 {
                     UpdateFilmGenres(selectedGenres, film);
-                    UpdateFilmActors(selectedActors, film);
+                    UpdateFilmActors(selectedActors, Request.Form, film);
 
                     db.SaveChanges();
                     return RedirectToAction("Index");
@@ -215,7 +218,7 @@ namespace MovieStudioWebApplication.Controllers
             }
         }
 
-        private void UpdateFilmActors(string[] selectedActors, Film filmToUpdate)
+        private void UpdateFilmActors(string[] selectedActors, NameValueCollection form, Film filmToUpdate)
         {
             if (selectedActors == null)
             {
@@ -228,11 +231,30 @@ namespace MovieStudioWebApplication.Controllers
                 filmToUpdate.FilmActors.Select(c => c.ActorID));
             foreach (var actor in db.Actors)
             {
-                if (selectedActorsHS.Contains(actor.ActorID.ToString()))
+                var isSelected = selectedActorsHS.Contains(actor.ActorID.ToString());
+                var roleValue = form?[$"actorRoles[{actor.ActorID}]"];
+                if (isSelected)
                 {
                     if (!filmActors.Contains(actor.ActorID))
                     {
-                        filmToUpdate.FilmActors.Add(new FilmActor { FilmID = filmToUpdate.FilmID, ActorID = actor.ActorID, Role = "Актер" });
+                        filmToUpdate.FilmActors.Add(new FilmActor
+                        {
+                            FilmID = filmToUpdate.FilmID,
+                            ActorID = actor.ActorID,
+                            Role = string.IsNullOrWhiteSpace(roleValue) ? "Актер" : roleValue
+                        });
+                    }
+                    else
+                    {
+                        var actorToUpdate = filmToUpdate.FilmActors.Single(c => c.ActorID == actor.ActorID);
+                        if (!string.IsNullOrWhiteSpace(roleValue))
+                        {
+                            actorToUpdate.Role = roleValue;
+                        }
+                        else if (string.IsNullOrWhiteSpace(actorToUpdate.Role))
+                        {
+                            actorToUpdate.Role = "Актер";
+                        }
                     }
                 }
                 else

@@ -21,5 +21,6 @@ namespace MovieStudioWebApplication.Models
         public int ActorID { get; set; }
         public string Name { get; set; }
         public bool Assigned { get; set; }
+        public string Role { get; set; }
     }
 }
