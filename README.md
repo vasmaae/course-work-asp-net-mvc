@@ -161,3 +161,24 @@ Director "0..*" -- "0..1" AwardRecipient : номинируется / прису
 
 @enduml
 ```
+
+Собственная аутентификация (без ASP.NET Identity)
+
+В приложении реализована простая аутентификация без использования встроенных логинов и паролей ASP.NET Identity. Используется собственная таблица пользователей и проверка пароля на стороне приложения.
+
+Основные моменты реализации:
+
+- Модель пользователя: `User` с полями `Username` и `PasswordHash`. Пароли в открытом виде не хранятся.
+- Регистрация: при создании пользователя пароль хэшируется через PBKDF2 (`Rfc2898DeriveBytes`) с солью. Соль + хэш сохраняются в одном поле `PasswordHash` (Base64).
+- Вход: при логине хэш вычисляется повторно с сохраненной солью и сравнивается с сохраненным значением.
+- Аутентификация: после успешного входа создается `ClaimsIdentity` с типом `ApplicationCookie` и двумя claims: `NameIdentifier` (ID пользователя) и `Name` (логин).
+- Авторизация: глобальный фильтр `[Authorize]` применен ко всем контроллерам, кроме `Home/Index` (`[AllowAnonymous]`). Это исключает доступ к сущностям без входа.
+- Сессия: используются cookie, срок действия продлен (10 лет) и включено sliding expiration, чтобы не было жесткого тайм‑аута.
+- Защита форм: `@Html.AntiForgeryToken()` + корректная конфигурация `AntiForgeryConfig.UniqueClaimTypeIdentifier` через `NameIdentifier` claim.
+
+Ключевые файлы:
+
+- `MovieStudioWebApplication/Models/User.cs`
+- `MovieStudioWebApplication/Controllers/AccountController.cs`
+- `MovieStudioWebApplication/Startup.cs`
+- `MovieStudioWebApplication/App_Start/FilterConfig.cs`
