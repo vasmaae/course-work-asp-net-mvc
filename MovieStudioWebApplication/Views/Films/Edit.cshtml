@@ -96,8 +96,6 @@
                     <tr>
                         @{
                             int cnt = 0;
-                            List<MovieStudioWebApplication.Models.AssignedGenreData> genres = ViewBag.Genres;
-
                             foreach (var genre in Model.Genres)
                             {
                                 if (cnt++ % 3 == 0)

@@ -23,5 +23,6 @@ namespace MovieStudioWebApplication.Models
 
         public virtual ICollection<Department> Departments { get; set; }
         public virtual ICollection<Film> Films { get; set; }
+        public virtual StudioDetails Details { get; set; }
     }
 }

@@ -11,15 +11,15 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Director.FirstName)
+            Режиссер
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Director.FirstName)
+            @Model.Director.FirstName @Model.Director.LastName
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Studio.Name)
+            Студия
         </dt>
 
         <dd>
@@ -80,6 +80,36 @@
 
         <dd>
             @Html.DisplayFor(model => model.Synopsis)
+        </dd>
+
+        <dt>
+            Актеры
+        </dt>
+
+        <dd>
+            @if (Model.FilmActors != null && Model.FilmActors.Count > 0)
+            {
+                <ul class="list-unstyled mb-0">
+                    @foreach (var filmActor in Model.FilmActors)
+                    {
+                        if (filmActor.Actor == null)
+                        {
+                            continue;
+                        }
+                        <li>
+                            @filmActor.Actor.FirstName @filmActor.Actor.LastName
+                            @if (!string.IsNullOrWhiteSpace(filmActor.Role))
+                            {
+                                @: — @filmActor.Role
+                            }
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <span>Нет данных</span>
+            }
         </dd>
 
     </dl>

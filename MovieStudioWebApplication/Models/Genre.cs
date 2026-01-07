@@ -5,6 +5,10 @@ namespace MovieStudioWebApplication.Models
 {
     public class Genre
     {
+        public Genre()
+        {
+            this.Films = new HashSet<Film>();
+        }
         [Key]
         [Display(Name = "ID Жанра")]
         public int GenreID { get; set; }
@@ -13,6 +17,6 @@ namespace MovieStudioWebApplication.Models
         [Display(Name = "Описание")]
         public string Description { get; set; }
 
-        public virtual ICollection<FilmGenre> FilmGenres { get; set; }
+        public virtual ICollection<Film> Films { get; set; }
     }
 }

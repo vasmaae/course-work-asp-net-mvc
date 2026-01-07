@@ -13,7 +13,7 @@ BEGIN
     DECLARE @fullName NVARCHAR(101);
 
     SELECT @fullName = FirstName + ' ' + LastName
-    FROM dbo.Directors
+    FROM dbo.Director
     WHERE DirectorID = @directorId;
 
     RETURN @fullName;
@@ -35,7 +35,7 @@ BEGIN
     DECLARE @filmCount INT;
 
     SELECT @filmCount = COUNT(FG.FilmID)
-    FROM dbo.FilmGenres AS FG
+    FROM dbo.FilmGenre AS FG
     WHERE FG.GenreID = @genreId;
 
     RETURN @filmCount;
@@ -56,9 +56,9 @@ BEGIN
     SET NOCOUNT ON;
 
     -- Select statements for procedure here
-    SELECT A.ActorID, A.FirstName, A.LastName, A.DateOfBirth
-    FROM dbo.Actors AS A
-    INNER JOIN dbo.FilmActors AS FA ON A.ActorID = FA.ActorID
+    SELECT A.ActorID, A.FirstName, A.LastName, A.BirthDate
+    FROM dbo.Actor AS A
+    INNER JOIN dbo.FilmActor AS FA ON A.ActorID = FA.ActorID
     WHERE FA.FilmID = @filmId
     ORDER BY A.LastName, A.FirstName;
 END

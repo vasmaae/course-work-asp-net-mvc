@@ -12,6 +12,27 @@
     white-space: normal;
 }
 
+/* Bootstrap 5 compatibility for scaffolded MVC views */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.btn-default {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-default:hover {
+    color: #fff;
+    background-color: #5c636a;
+    border-color: #565e64;
+}
+
+.btn-default:focus {
+    box-shadow: 0 0 0 0.25rem rgba(130, 138, 145, 0.5);
+}
+
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,

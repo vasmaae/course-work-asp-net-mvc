@@ -27,7 +27,7 @@ namespace MovieStudioWebApplication.Controllers
             // Filtering by Genre
             if (genreId.HasValue)
             {
-                films = films.Where(f => f.FilmGenres.Any(fg => fg.GenreID == genreId.Value));
+                films = films.Where(f => f.Genres.Any(g => g.GenreID == genreId.Value));
             }
 
             // Filtering by Release Year
@@ -49,7 +49,11 @@ namespace MovieStudioWebApplication.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Film film = db.Films.Find(id);
+            Film film = db.Films
+                .Include(f => f.Director)
+                .Include(f => f.Studio)
+                .Include(f => f.FilmActors.Select(fa => fa.Actor))
+                .SingleOrDefault(f => f.FilmID == id);
             if (film == null)
             {
                 return HttpNotFound();
@@ -60,7 +64,7 @@ namespace MovieStudioWebApplication.Controllers
         private void PopulateAssignedData(FilmViewModel viewModel)
         {
             var allGenres = db.Genres;
-            var filmGenres = new HashSet<int>(viewModel.Film.FilmGenres.Select(g => g.GenreID));
+            var filmGenres = new HashSet<int>(viewModel.Film.Genres.Select(g => g.GenreID));
             var allActors = db.Actors;
             var filmActors = new HashSet<int>(viewModel.Film.FilmActors.Select(a => a.ActorID));
 
@@ -130,7 +134,7 @@ namespace MovieStudioWebApplication.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Film film = db.Films
-                .Include(f => f.FilmGenres)
+                .Include(f => f.Genres)
                 .Include(f => f.FilmActors)
                 .Where(f => f.FilmID == id)
                 .Single();
@@ -159,7 +163,7 @@ namespace MovieStudioWebApplication.Controllers
             if (ModelState.IsValid)
             {
                 var film = db.Films
-                    .Include(f => f.FilmGenres)
+                    .Include(f => f.Genres)
                     .Include(f => f.FilmActors)
                     .Where(f => f.FilmID == viewModel.Film.FilmID)
                     .Single();
@@ -184,28 +188,28 @@ namespace MovieStudioWebApplication.Controllers
         {
             if (selectedGenres == null)
             {
-                filmToUpdate.FilmGenres.Clear();
+                filmToUpdate.Genres.Clear();
                 return;
             }
 
             var selectedGenresHS = new HashSet<string>(selectedGenres);
-            var filmGenres = new HashSet<int>
-                (filmToUpdate.FilmGenres.Select(c => c.GenreID));
+            var filmGenres = new HashSet<int>(
+                filmToUpdate.Genres.Select(c => c.GenreID));
             foreach (var genre in db.Genres)
             {
                 if (selectedGenresHS.Contains(genre.GenreID.ToString()))
                 {
                     if (!filmGenres.Contains(genre.GenreID))
                     {
-                        filmToUpdate.FilmGenres.Add(new FilmGenre { FilmID = filmToUpdate.FilmID, GenreID = genre.GenreID });
+                        filmToUpdate.Genres.Add(genre);
                     }
                 }
                 else
                 {
                     if (filmGenres.Contains(genre.GenreID))
                     {
-                        var genreToRemove = filmToUpdate.FilmGenres.Single(c => c.GenreID == genre.GenreID);
-                        filmToUpdate.FilmGenres.Remove(genreToRemove);
+                        var genreToRemove = filmToUpdate.Genres.Single(c => c.GenreID == genre.GenreID);
+                        filmToUpdate.Genres.Remove(genreToRemove);
                     }
                 }
             }
@@ -220,8 +224,8 @@ namespace MovieStudioWebApplication.Controllers
             }
 
             var selectedActorsHS = new HashSet<string>(selectedActors);
-            var filmActors = new HashSet<int>
-                (filmToUpdate.FilmActors.Select(c => c.ActorID));
+            var filmActors = new HashSet<int>(
+                filmToUpdate.FilmActors.Select(c => c.ActorID));
             foreach (var actor in db.Actors)
             {
                 if (selectedActorsHS.Contains(actor.ActorID.ToString()))

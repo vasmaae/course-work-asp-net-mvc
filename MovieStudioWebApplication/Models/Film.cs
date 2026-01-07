@@ -8,7 +8,7 @@ namespace MovieStudioWebApplication.Models
     {
         public Film()
         {
-            this.FilmGenres = new HashSet<FilmGenre>();
+            this.Genres = new HashSet<Genre>();
             this.FilmActors = new HashSet<FilmActor>();
             this.AwardRecipients = new HashSet<AwardRecipient>();
         }
@@ -42,7 +42,7 @@ namespace MovieStudioWebApplication.Models
 
         public virtual Studio Studio { get; set; }
         public virtual Director Director { get; set; }
-        public virtual ICollection<FilmGenre> FilmGenres { get; set; }
+        public virtual ICollection<Genre> Genres { get; set; }
         public virtual ICollection<FilmActor> FilmActors { get; set; }
         public virtual ICollection<AwardRecipient> AwardRecipients { get; set; }
     }
