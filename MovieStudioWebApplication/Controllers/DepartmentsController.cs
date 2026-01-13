@@ -1,5 +1,6 @@
 using MovieStudioWebApplication.Models;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -15,6 +16,16 @@ namespace MovieStudioWebApplication.Controllers
         {
             var departments = db.Departments.Include(d => d.Studio);
             return View(departments.ToList());
+        }
+
+        // POST: Departments/UpdateEmployeeCount/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateEmployeeCount(int id)
+        {
+            var idParam = new SqlParameter("@departmentId", id);
+            db.Database.ExecuteSqlCommand("EXEC dbo.UpdateDepartmentEmployeeCount @departmentId", idParam);
+            return RedirectToAction("Index");
         }
 
         // GET: Departments/Details/5

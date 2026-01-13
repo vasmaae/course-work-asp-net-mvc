@@ -10,9 +10,9 @@ namespace MovieStudioWebApplication.Controllers
     {
         private MovieDbContext db = new MovieDbContext();
 
-        public ActionResult Index(decimal? minRating)
+        public ActionResult Index(decimal? minProfit, int? year)
         {
-            var rating = minRating ?? 7.0m;
+            var minProfitValue = minProfit ?? 0m;
 
             var genreCounts = db.Database.SqlQuery<GenreFilmCountReportItem>(
                 "SELECT G.GenreID, G.Name AS GenreName, dbo.GetFilmCountForGenre(G.GenreID) AS FilmCount " +
@@ -22,16 +22,18 @@ namespace MovieStudioWebApplication.Controllers
                 "SELECT F.FilmID, F.Title, dbo.GetDirectorFullName(F.DirectorID) AS DirectorName, F.Rating " +
                 "FROM Film AS F ORDER BY F.Title").ToArray();
 
-            var ratingParam = new SqlParameter("@minRating", rating);
-            var topRatedFilms = db.Database.SqlQuery<TopRatedFilmReportItem>(
-                "EXEC dbo.GetTopFilmsByRating @minRating", ratingParam).ToArray();
+            var profitParam = new SqlParameter("@minProfit", minProfitValue);
+            var yearParam = new SqlParameter("@year", (object)year ?? DBNull.Value);
+            var topProfitFilms = db.Database.SqlQuery<TopProfitFilmReportItem>(
+                "EXEC dbo.GetTopFilmsByProfit @minProfit, @year", profitParam, yearParam).ToArray();
 
             var viewModel = new ReportsViewModel
             {
-                MinRating = rating,
+                MinProfit = minProfitValue,
+                Year = year,
                 GenreCounts = genreCounts,
                 FilmsWithDirectors = filmsWithDirectors,
-                TopRatedFilms = topRatedFilms
+                TopProfitFilms = topProfitFilms
             };
 
             return View(viewModel);

@@ -15,19 +15,20 @@ namespace MovieStudioWebApplication.Models
         public decimal? Rating { get; set; }
     }
 
-    public class TopRatedFilmReportItem
+    public class TopProfitFilmReportItem
     {
         public int FilmID { get; set; }
         public string Title { get; set; }
         public int ReleaseYear { get; set; }
-        public decimal? Rating { get; set; }
+        public decimal Profit { get; set; }
     }
 
     public class ReportsViewModel
     {
-        public decimal MinRating { get; set; }
+        public decimal MinProfit { get; set; }
+        public int? Year { get; set; }
         public GenreFilmCountReportItem[] GenreCounts { get; set; }
         public FilmWithDirectorReportItem[] FilmsWithDirectors { get; set; }
-        public TopRatedFilmReportItem[] TopRatedFilms { get; set; }
+        public TopProfitFilmReportItem[] TopProfitFilms { get; set; }
     }
 }

@@ -29,7 +29,8 @@
         <th>
             @Html.DisplayNameFor(model => model.Responsibilities)
         </th>
-        <th></th>
+        <th>Действия</th>
+        <th>Численность</th>
     </tr>
 
 @foreach (var item in Model) {
@@ -56,6 +57,17 @@
             @Html.ActionLink("Редактировать", "Edit", new { id=item.DepartmentID }) |
             @Html.ActionLink("Подробнее", "Details", new { id=item.DepartmentID }) |
             @Html.ActionLink("Удалить", "Delete", new { id=item.DepartmentID })
+        </td>
+        <td>
+            @using (Html.BeginForm("UpdateEmployeeCount", "Departments", new { id = item.DepartmentID }, FormMethod.Post, new { @class = "d-inline" }))
+            {
+                @Html.AntiForgeryToken()
+                <button type="submit"
+                        class="btn btn-outline-secondary btn-sm"
+                        onclick="return confirm('Обновить численность сотрудников в отделе?');">
+                    Обновить
+                </button>
+            }
         </td>
     </tr>
 }
